@@ -3,13 +3,14 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { IoMdArrowDropdown } from "react-icons/io";
+import ProfileCard from './ProfileCard';
 
 
 const UserProfile = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <div className="flex items-center gap-2  mr-4 hover:cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+        <div className="flex items-center gap-2  mr-4 hover:cursor-pointer relative" onClick={() => setIsOpen(!isOpen)}>
             <div className="rounded-full overflow-hidden w-10 h-10">
                 <Image
                     src="https://images8.alphacoders.com/124/thumb-1920-1243838.jpg"
@@ -20,6 +21,7 @@ const UserProfile = () => {
                 />
             </div>
             <IoMdArrowDropdown className={`scale-110 transition-all ${isOpen ? "rotate-180" : "-rotate-0"}`} />
+            {isOpen && <ProfileCard/>}
         </div>
     );
 };
