@@ -11,7 +11,7 @@ const ProfileCard = () => {
             className="absolute top-full mt-2 right-0 bg-white shadow-md p-4 rounded-md w-48 z-10"
         >
             <ul>
-                <li className="hover:bg-black hover:bg-opacity-30"><Link href={"#"} >Account</Link></li>
+                <li className="hover:bg-black transition-all hover:bg-opacity-30 rounded-t-md"><Link href={"/profile"} >Account</Link></li>
                 <div className="border border-black "></div>
                 <li><Link href={"#"}>Log Out</Link></li>
             </ul>
