@@ -4,7 +4,7 @@ import SearchInput from "./SearchInput"
 
 const Navbar = () => {
     return (
-        <div className="flex items-center gap-2 md:w-full">
+        <div className="flex items-center gap-2 md:w-1/2 w-full">
             <SearchInput />
             <nav className="flex items-center">
                 <ul className="flex justify-around items-center gap-3">
