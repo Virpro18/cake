@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.somet {
+    box-shadow: 1px black ;
+}
