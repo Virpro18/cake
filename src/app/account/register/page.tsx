@@ -6,12 +6,13 @@ import Link from 'next/link';
 import git from '@/assets/github-mark.png';
 import twitter from '@/assets/logo-black.png';
 import { supabase } from '@/libs/supabase/client';
+import { Provider } from '@supabase/supabase-js';
 
 const register = () => {
-    async function signInWithGithub() {
+    async function signInWithGithub(provider: Provider) {
         const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'github',
-            options: { redirectTo: 'http://localhost:3000/' }
+            provider,
+            options: { redirectTo: '' }
         })
         console.log(error)
         console.log(data)
@@ -37,17 +38,17 @@ const register = () => {
                         <p className="mt-4 text-gray-600">Already have an account? <Link href="/account/login" className="text-blue-500 hover:underline">Login</Link></p>
 
                     </div>
-                    <div className='flex items-center gap-7 mt-4'>
-                        <Link href={"#"} onClick={signInWithGithub}>
-                            <Image src={git} alt="GitHub" width={40} height={40} />
-                        </Link>
-                        <Link href={"/"}>
-                            <Image src="/discord.svg" alt='Discord' width={40} height={40} />
-                        </Link>
-                        <Link href={"/"}>
-                            <Image src={twitter} alt='Twitter' width={40} height={40} />
-                        </Link>
-                    </div>
+                    <ul className='flex items-center justify-center gap-4 mt-4'>
+                        <li onClick={() => signInWithGithub("github")} className='hover:cursor-pointer'>
+                            <Image src={git} alt="GitHub" width={50} height={50} />
+                        </li>
+                        <li onClick={() => signInWithGithub("discord")} className='hover:cursor-pointer'>
+                            <Image src="/discord.svg" alt='Discord' width={50} height={50} />
+                        </li>
+                        <li onClick={() => signInWithGithub("twitter")} className='hover:cursor-pointer'>
+                            <Image src={twitter} alt='Twitter' width={50} height={50} />
+                        </li>
+                    </ul>
                 </div>
                 <Image
                     src={iceCreamCake}

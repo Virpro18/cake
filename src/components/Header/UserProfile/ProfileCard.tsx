@@ -4,25 +4,12 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { User } from "@supabase/supabase-js"
 
-const ProfileCard = () => {
-    const [user, setUser] = useState<User | null>(null)
-    const [loading, setLoading] = useState(true)
-
+const ProfileCard = (data: { user: User | null }) => {
     async function signOut() {
         const { error } = await supabase.auth.signOut()
         console.log(error)
-      }
-      
-    useEffect(() => {
-        const checkUser = async () => {
-            const { data } = await supabase.auth.getUser()
-
-            setUser(data.user)
-            setLoading(false)
-        }
-
-        checkUser()
-    }, [])
+    }
+    console.log(data)
 
     return (
         <motion.div
@@ -31,11 +18,7 @@ const ProfileCard = () => {
             transition={{ duration: 0.25 }}
             className="absolute top-full mt-2 right-0 bg-white shadow-md p-4 rounded-md w-48 z-10"
         >
-            {loading ? (
-                <div className="flex justify-center items-center">
-                    <div className="loader"></div> {/* You can replace this with any loading spinner or message */}
-                </div>
-            ) : user ? (
+            {data.user ? (
                 <ul>
                     <li className="hover:bg-black transition-all hover:bg-opacity-30 rounded-t-md"><Link href={"/profile"} >Account</Link></li>
                     <div className="border border-black "></div>

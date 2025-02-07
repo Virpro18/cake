@@ -6,11 +6,12 @@ import git from "@/assets/github-mark.png"
 import Link from 'next/link';
 import twitter from "@/assets/logo-black.png"
 import { supabase } from '@/libs/supabase/client';
+import { Provider } from '@supabase/supabase-js';
 
 const login = () => {
-    async function signInWithGithub() {
+    async function signInWithGithub(provider:Provider) {
         const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'github',
+            provider,
             options: { redirectTo: 'http://localhost:3000/' }
         })
         console.log(error)
@@ -34,17 +35,17 @@ const login = () => {
                             <p className="mt-4 text-gray-600">Don&#39;t have an account? <Link href="/account/register" className="text-blue-500 hover:underline">Register</Link></p>
                         </div>
                     </div>
-                    <div className='flex items-center justify-center gap-4 mt-4'>
-                        <Link href={"/"} onClick={signInWithGithub}>
+                    <ul className='flex items-center justify-center gap-4 mt-4'>
+                        <li onClick={() => signInWithGithub("github")} className='hover:cursor-pointer'>
                             <Image src={git} alt="GitHub" width={50} height={50} />
-                        </Link>
-                        <Link href={"/"}>
+                        </li>
+                        <li onClick={() => signInWithGithub("discord")} className='hover:cursor-pointer'>
                             <Image src="/discord.svg" alt='Discord' width={50} height={50} />
-                        </Link>
-                        <Link href={"/"}>
+                        </li>
+                        <li onClick={() => signInWithGithub("twitter")} className='hover:cursor-pointer'>
                             <Image src={twitter} alt='Twitter' width={50} height={50} />
-                        </Link>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
                 <Image
                     src={iceCreamCake}

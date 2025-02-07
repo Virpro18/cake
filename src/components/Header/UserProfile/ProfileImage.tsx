@@ -1,10 +1,15 @@
+import { UserMetadata } from '@supabase/supabase-js';
 import Image from 'next/image';
 
-const ProfileImage = () => {
+const ProfileImage = (data: { user: UserMetadata | undefined }) => {
+    console.log("/home/arona/bansaka/src/components/Header/UserProfile/ProfileImage.tsx:")
+    console.log(data.user)
+
+
     return (
         <div className="rounded-full overflow-hidden w-10 h-10">
             <Image
-                src="https://images8.alphacoders.com/124/thumb-1920-1243838.jpg"
+                src={data.user ? data.user.avatar_url : `https://images8.alphacoders.com/124/thumb-1920-1243838.jpg`}
                 alt="User Profile"
                 width={40} // Sesuaikan dengan ukuran w-12 (12 * 4 = 48px)
                 height={40} // Sesuaikan dengan ukuran h-12 (12 * 4 = 48px)
