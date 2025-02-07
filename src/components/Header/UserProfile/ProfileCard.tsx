@@ -8,6 +8,11 @@ const ProfileCard = () => {
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true)
 
+    async function signOut() {
+        const { error } = await supabase.auth.signOut()
+        console.log(error)
+      }
+      
     useEffect(() => {
         const checkUser = async () => {
             const { data } = await supabase.auth.getUser()
@@ -34,7 +39,7 @@ const ProfileCard = () => {
                 <ul>
                     <li className="hover:bg-black transition-all hover:bg-opacity-30 rounded-t-md"><Link href={"/profile"} >Account</Link></li>
                     <div className="border border-black "></div>
-                    <li><Link href={"#"}>Log Out</Link></li>
+                    <li><Link href={"#"} onClick={signOut}>Log Out</Link></li>
                 </ul>
             ) : (
                 <div className="flex items-center gap-2">

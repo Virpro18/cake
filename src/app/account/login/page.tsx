@@ -1,8 +1,22 @@
+"use client"
+
 import Image from 'next/image';
 import iceCreamCake from "@/assets/ice-cream-cake.jpg";
 import git from "@/assets/github-mark.png"
+import Link from 'next/link';
+import twitter from "@/assets/logo-black.png"
+import { supabase } from '@/libs/supabase/client';
 
 const login = () => {
+    async function signInWithGithub() {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'github',
+            options: { redirectTo: 'http://localhost:3000/' }
+        })
+        console.log(error)
+        console.log(data)
+    }
+
     return (
         <>
             <div className="w-screen h-screen flex md:justify-end items-center justify-center z-10 relative">
@@ -16,21 +30,27 @@ const login = () => {
                             <input type="text" id="username" placeholder="Enter your username or email" className='border border-gray-300 rounded md:w-2/3 w-full p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500' />
                             <label htmlFor="password" className="mb-2 font-semibold text-gray-700">Password</label>
                             <input type="password" id="password" placeholder="Enter your password" className='border border-gray-300 rounded md:w-2/3 w-full p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500' />
-                            <button className='bg-blue-500 p-3 rounded font-bold text-white w-2/3 hover:bg-blue-600 transition duration-300'>Login</button>
+                            <button className='bg-blue-500 p-3 rounded font-bold text-white w-full md:w-2/3 hover:bg-blue-600 transition duration-300'>Login</button>
+                            <p className="mt-4 text-gray-600">Don&#39;t have an account? <Link href="/account/register" className="text-blue-500 hover:underline">Register</Link></p>
                         </div>
                     </div>
-                    <div className='flex'>
-                        <div>
-                            <Image src={git} alt="error"></Image>
-                        </div>
+                    <div className='flex items-center justify-center gap-4 mt-4'>
+                        <Link href={"/"} onClick={signInWithGithub}>
+                            <Image src={git} alt="GitHub" width={50} height={50} />
+                        </Link>
+                        <Link href={"/"}>
+                            <Image src="/discord.svg" alt='Discord' width={50} height={50} />
+                        </Link>
+                        <Link href={"/"}>
+                            <Image src={twitter} alt='Twitter' width={50} height={50} />
+                        </Link>
                     </div>
                 </div>
                 <Image
                     src={iceCreamCake}
                     alt="Ice Cream Cake"
-                    layout="fill"
-                    objectFit="cover"
-                    className="md:blur-md blur-none md:h-screen w-screen absolute z-[-1]"
+                    fill
+                    className="md:blur-md blur-none md:h-screen w-screen absolute z-[-1] object-cover"
                 />
             </div>
         </>
