@@ -1,7 +1,6 @@
 import { supabase } from "@/libs/supabase/client"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { useEffect, useState } from "react"
 import { User } from "@supabase/supabase-js"
 
 const ProfileCard = (data: { user: User | null }) => {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProfileImage from "../UserProfile/ProfileImage";
 import { UserMetadata } from "@supabase/supabase-js";
+import { memo } from "react";
 
 const Mobile = ({data}:{data:UserMetadata | undefined}) => (
     <div className="md:hidden block fixed w-full bottom-0 bg-gray-100">
@@ -22,4 +23,4 @@ const Mobile = ({data}:{data:UserMetadata | undefined}) => (
     </div>
 )
 
-export default Mobile;  
+export default memo(Mobile);  
