@@ -16,7 +16,7 @@ const Mobile = ({ data }: { data: UserMetadata | undefined }) => (
                 <Link href={"/"}>About</Link>
             </li>
             <li>
-                <Link href={"/account/profile"}><ProfileImage user={data} /></Link>
+                <Link href={data ? `/profile` : '/account/login'}><ProfileImage user={data} /></Link>
             </li>
         </ul>
 
