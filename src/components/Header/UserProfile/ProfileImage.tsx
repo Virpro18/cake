@@ -7,8 +7,8 @@ const ProfileImage = ((data: { user: UserMetadata | undefined }) => {
     useEffect(() => {
         setUser(data.user)
     }, [data.user])
-    console.log("/home/arona/bansaka/src/components/Header/UserProfile/ProfileImage.tsx:")
-    console.log(user)
+    // console.log("/home/arona/bansaka/src/components/Header/UserProfile/ProfileImage.tsx:")
+    // console.log(user)
 
     return (
         <div className="rounded-full overflow-hidden w-10 h-10">

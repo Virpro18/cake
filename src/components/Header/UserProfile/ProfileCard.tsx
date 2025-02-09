@@ -1,27 +1,51 @@
 import { supabase } from "@/libs/supabase/client"
+
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { User } from "@supabase/supabase-js"
+import ProfileImage from "./ProfileImage"
+
+interface UserMetadata {
+    full_name: string;
+    email: string;
+}
 
 const ProfileCard = (data: { user: User | null }) => {
     async function signOut() {
         const { error } = await supabase.auth.signOut()
-        console.log(error)
+        if (error) console.log(error);
+        window.location.reload()
     }
-    console.log(data)
+
+    const userMetadata = data.user?.user_metadata as UserMetadata | undefined;
 
     return (
         <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}
-            className="absolute top-full mt-2 right-0 bg-white shadow-md p-4 rounded-md w-48 z-10"
+            className="absolute top-full mt-2 right-0 bg-white shadow-md p-4 rounded-md w-fit z-10 cursor-default"
         >
             {data.user ? (
-                <ul>
-                    <li className="hover:bg-black transition-all hover:bg-opacity-30 rounded-t-md"><Link href={"/profile"} >Account</Link></li>
-                    <div className="border border-black "></div>
-                    <li><Link href={"#"} onClick={signOut}>Log Out</Link></li>
+                <ul className="space-y-2 flex flex-col gap-0.5">
+                    <li className="flex gap-3">
+                        <ProfileImage user={userMetadata} />
+                        <div>
+                            <p className="font-bold">{userMetadata?.full_name}</p>
+                            <p className="text-sm text-gray-600">{data.user.email}</p>
+                        </div>
+                    </li>
+                    <div className="border-neutral-200 border-t-[2px] my-3 w-full"></div>
+                    <li className="hover:bg-black transition-all hover:bg-opacity-20 rounded">
+                        <Link href={"/profile"} className="block w-full h-full p-2">Akun</Link>
+                    </li>
+                    <li className="hover:bg-black transition-all hover:bg-opacity-20 rounded">
+                        <Link href={"/account/orders"} className="block w-full h-full p-2">Transaksi</Link>
+                    </li>
+                    <div className="border-neutral-200 border-t-[2px] my-3 w-full"></div>
+                    <li className="hover:bg-black transition-all hover:bg-opacity-20 hover:cursor-pointer rounded">
+                        <p onClick={signOut} className="block w-full h-full p-2">Log Out</p>
+                    </li>
                 </ul>
             ) : (
                 <div className="flex items-center gap-2">

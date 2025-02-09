@@ -4,7 +4,7 @@ import Image from 'next/image';
 import iceCreamCake from '@/assets/easter-carrot-cake-with-frosting-blue-background.jpg';
 import Link from 'next/link';
 import git from '@/assets/github-mark.png';
-import twitter from '@/assets/logo-black.png';
+// import spotify from "@/assets/Spotify_Primary_Logo_RGB_Green.png"
 import { supabase } from '@/libs/supabase/client';
 import { Provider } from '@supabase/supabase-js';
 
@@ -45,9 +45,9 @@ const register = () => {
                         <li onClick={() => signInWithGithub("discord")} className='hover:cursor-pointer'>
                             <Image src="/discord.svg" alt='Discord' width={50} height={50} />
                         </li>
-                        <li onClick={() => signInWithGithub("twitter")} className='hover:cursor-pointer'>
-                            <Image src={twitter} alt='Twitter' width={50} height={50} />
-                        </li>
+                        {/* <li onClick={() => signInWithGithub("twitter")} className='hover:cursor-pointer'>
+                        <Image src={spotify} alt='Spotify' width={50} height={50} />
+                        </li> */}
                     </ul>
                 </div>
                 <Image

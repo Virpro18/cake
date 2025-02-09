@@ -4,12 +4,12 @@ import Image from 'next/image';
 import iceCreamCake from "@/assets/ice-cream-cake.jpg";
 import git from "@/assets/github-mark.png"
 import Link from 'next/link';
-import twitter from "@/assets/logo-black.png"
+// import spotify from "@/assets/Spotify_Primary_Logo_RGB_Green.png"
 import { supabase } from '@/libs/supabase/client';
 import { Provider } from '@supabase/supabase-js';
 
 const login = () => {
-    async function signInWithGithub(provider:Provider) {
+    async function signInWith(provider: Provider) {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider,
             options: { redirectTo: 'http://localhost:3000/' }
@@ -36,15 +36,15 @@ const login = () => {
                         </div>
                     </div>
                     <ul className='flex items-center justify-center gap-4 mt-4'>
-                        <li onClick={() => signInWithGithub("github")} className='hover:cursor-pointer'>
+                        <li onClick={() => signInWith("github")} className='hover:cursor-pointer'>
                             <Image src={git} alt="GitHub" width={50} height={50} />
                         </li>
-                        <li onClick={() => signInWithGithub("discord")} className='hover:cursor-pointer'>
+                        <li onClick={() => signInWith("discord")} className='hover:cursor-pointer'>
                             <Image src="/discord.svg" alt='Discord' width={50} height={50} />
                         </li>
-                        <li onClick={() => signInWithGithub("twitter")} className='hover:cursor-pointer'>
-                            <Image src={twitter} alt='Twitter' width={50} height={50} />
-                        </li>
+                        {/* <li onClick={() => signInWith("spotify")} className='hover:cursor-pointer'>
+                            <Image src={spotify} alt='Spotify' width={50} height={50} />
+                        </li> */}
                     </ul>
                 </div>
                 <Image
