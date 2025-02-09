@@ -12,7 +12,7 @@ const register = () => {
     async function signInWithGithub(provider: Provider) {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider,
-            options: { redirectTo: '' }
+            options: { redirectTo: '/' }
         })
         console.log(error)
         console.log(data)

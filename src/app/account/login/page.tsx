@@ -12,7 +12,7 @@ const login = () => {
     async function signInWith(provider: Provider) {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider,
-            options: { redirectTo: 'http://localhost:3000/' }
+            options: { redirectTo: '/' }
         })
         console.log(error)
         console.log(data)
