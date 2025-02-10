@@ -12,7 +12,7 @@ const login = () => {
     async function signInWith(provider: Provider) {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider,
-            options: { redirectTo: '/' }
+            options: { redirectTo: 'https://cake-hazel.vercel.app/' }
         })
         console.log(error)
         console.log(data)

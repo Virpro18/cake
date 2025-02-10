@@ -16,6 +16,7 @@ const ProfileCard = (data: { user: User | null }) => {
         if (error) console.log(error);
         window.location.reload()
     }
+    
 
     const userMetadata = data.user?.user_metadata as UserMetadata | undefined;
 

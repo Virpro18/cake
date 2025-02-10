@@ -8,6 +8,7 @@ const SearchInput = () => {
 
     const handleSearch = () => {
         // Implement your search logic here
+        window.location.href = `/search/${searchTerm}`;
         console.log("Searching for:", searchTerm);
     };
 
