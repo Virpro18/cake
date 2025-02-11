@@ -7,15 +7,27 @@ import Link from 'next/link';
 // import spotify from "@/assets/Spotify_Primary_Logo_RGB_Green.png"
 import { supabase } from '@/libs/supabase/client';
 import { Provider } from '@supabase/supabase-js';
+import { useEffect, useState } from 'react';
 
-const login = () => {
+const Login = () => {
+    const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const params = searchParams.get("redirect"); // Mengambil nilai parameter 'redirect'
+        const redirectUrl = `${process.env.NEXT_PUBLIC_REDIRECT_URL!}${params}`;
+        setRedirectUrl(redirectUrl);
+        console.log(redirectUrl);
+    }, []);
+
     async function signInWith(provider: Provider) {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider,
-            options: { redirectTo: 'https://cake-hazel.vercel.app/' }
-        })
-        console.log(error)
-        console.log(data)
+            options: { redirectTo: redirectUrl || 'https://cake-hazel.vercel.app/' }
+        });
+        
+        console.log(error);
+        console.log(data);
     }
 
     return (
@@ -58,4 +70,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Login;

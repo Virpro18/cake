@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-.somet {
-    box-shadow: 1px black ;
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Untuk seluruh halaman */
+::-webkit-scrollbar {
+    width: 8px;
+    /* Lebar scrollbar */
+}
+
+/* Track (jalur scrollbar) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Warna background track */
+    border-radius: 10px;
+}
+
+/* Thumb (bagian yang bisa digeser) */
+::-webkit-scrollbar-thumb {
+    background: #d8ebffa4;
+    /* Warna scrollbar */
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover efek */
+::-webkit-scrollbar-thumb:hover {
+    background: #0057b383;
 }
