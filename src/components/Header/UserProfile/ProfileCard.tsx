@@ -16,7 +16,7 @@ const ProfileCard = (data: { user: User | null }) => {
         if (error) console.log(error);
         window.location.reload()
     }
-    
+
 
     const userMetadata = data.user?.user_metadata as UserMetadata | undefined;
 
@@ -38,7 +38,7 @@ const ProfileCard = (data: { user: User | null }) => {
                     </li>
                     <div className="border-neutral-200 border-t-[2px] my-3 w-full"></div>
                     <li className="hover:bg-black transition-all hover:bg-opacity-20 rounded">
-                        <Link href={"/profile"} className="block w-full h-full p-2">Akun</Link>
+                        <Link href={"/account/profile"} className="block w-full h-full p-2">Akun</Link>
                     </li>
                     <li className="hover:bg-black transition-all hover:bg-opacity-20 rounded">
                         <Link href={"/account/orders"} className="block w-full h-full p-2">Transaksi</Link>

@@ -22,7 +22,7 @@ const Header = () => {
         }
         checkUser()
     }, [])
-    if (path == "/account/login" || path == "/account/register") return (<></>)
+    if (path.startsWith("/account")) return (<></>)
     return (
 
         <>

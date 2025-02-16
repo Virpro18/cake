@@ -5,9 +5,8 @@ const profile = async () => {
     const client = await createClient();
     const user = await client.auth.getUser()
     const data = user?.data.user?.user_metadata;
-    console.log(data)
     return (
-        <div className="flex justify-center h-screen">
+        <div className="flex justify-center h-screen px-11">
             <nav>
                 <div className='flex gap-2 items-center'>  {/*profile*/}
                     <ProfileImage user={data} />
@@ -17,7 +16,7 @@ const profile = async () => {
                     </div>
                 </div>
             </nav>
-            <div>
+            <div className='w-full'>
 
             </div>
 
