@@ -21,9 +21,13 @@ const Mobile = ({ data }: { data: UserMetadata | undefined }) => {
                     <li>
                         <Link href={"/"}>About</Link>
                     </li>
-                    <li onClick={() => setIsOpen(!isOpen)}>
-                        <ProfileImage user={data} />
-                    </li>
+                    {data ?
+                        <li onClick={() => setIsOpen(!isOpen)}>
+                           <ProfileImage user={data} />
+                        </li> :
+                        <li>
+                            <Link href={"/account/login"}><ProfileImage user={data} /></Link>
+                        </li>}
                 </ul>
             </div>
             {isOpen && <Navigation />}
