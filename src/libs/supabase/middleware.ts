@@ -36,9 +36,9 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Jika pengguna tidak ada dan URL tidak dimulai dengan '/login', redirect ke halaman login
-  if (!user && !request.nextUrl.pathname.startsWith('/login')) {
+  if (!user && !request.nextUrl.pathname.startsWith('/account/login')) {
     const url = request.nextUrl.clone()
-    url.pathname = '/login'
+    url.pathname = '/account/login'
     return NextResponse.redirect(url)
   }
 

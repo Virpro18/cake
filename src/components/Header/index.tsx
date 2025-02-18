@@ -8,20 +8,21 @@ import { supabase } from "@/libs/supabase/client"
 import { useEffect, useState } from "react"
 import { User } from "@supabase/supabase-js"
 import { usePathname } from 'next/navigation';
+import { useDataStore } from "@/libs/zutstand/store"
 
 
 const Header = () => {
     const [user, setUser] = useState<User | null>()
+    const { data, setData } = useDataStore()
 
     const path = usePathname()
     useEffect(() => {
-        const checkUser = async () => {
-            const { data } = await supabase.auth.getUser()
-            console.log("/home/arona/bansaka/src/components/Header/index.tsx: ")
-            setUser(data.user)
+        if (!data) {
+            setData()
         }
-        checkUser()
-    }, [])
+        setUser(data)
+        console.log(data?.user_metadata)
+    }, [data, setData])
     if (path.startsWith("/account")) return (<></>)
     return (
 

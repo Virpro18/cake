@@ -10,7 +10,7 @@ const Mobile = ({ data }: { data: UserMetadata | undefined }) => {
 
     return (
         <>
-            <div className="md:hidden block fixed w-full bottom-0 bg-gray-100 z-50">
+            <div className="md:hidden block fixed w-full bottom-0 bg-gray-100">
                 <ul className="flex justify-around items-center w-full p-2">
                     <li>
                         <Link href={"/"}>Home</Link>
@@ -30,7 +30,7 @@ const Mobile = ({ data }: { data: UserMetadata | undefined }) => {
                         </li>}
                 </ul>
             </div>
-            {isOpen && <Navigation />}
+            {isOpen && <Navigation setIsOpen={setIsOpen}/>}
         </>
     )
 }
