@@ -2,6 +2,7 @@ import { useDataStore } from "@/libs/zutstand/store";
 import Link from "next/link";
 import ProfileImage from "../UserProfile/ProfileImage";
 import { Dispatch, SetStateAction } from "react";
+import { supabase } from "@/libs/supabase/client";
 
 interface props {
   setIsOpen: Dispatch<SetStateAction<boolean>>
@@ -9,6 +10,11 @@ interface props {
 const Navigation = ({ setIsOpen }: props) => {
   const { data } = useDataStore();
   console.log(data)
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+    if (error) console.log(error);
+    window.location.reload()
+  }
   return (
     <div className="fixed inset-0 flex items-center justify-center md:hidden bg-black bg-opacity-70" onClick={() => setIsOpen(false)}>
       <div className="flex flex-col gap-2 w-3/4 p-4 bg-white z-50" onClick={(e) => e.stopPropagation()}>
@@ -19,11 +25,13 @@ const Navigation = ({ setIsOpen }: props) => {
             <p className="text-xs text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis w-48">{data?.user_metadata?.email}</p>
           </div>
         </div>
-        <div className="border border-gray w-full"></div>
-        <div className="bg-gray-100 p-2 flex flex-col gap-4">
-          <Link href={"https://cake-hazel.vercel.app"}>kimino</Link>
-          <Link href={"https://cake-hazel.vercel.app"}>kimino</Link>
-          <Link href={"https://cake-hazel.vercel.app"}>kimino</Link>
+        <div className="border border-gray-500 w-full"></div>
+        <div className=" p-2 flex flex-col gap-2">
+          <Link href={"https://cake-hazel.vercel.app"} className="hover:bg-gray-200 transition-colors p-2 rounded">Akun</Link>
+          <Link href={"https://cake-hazel.vercel.app"} className="hover:bg-gray-200 transition-colors p-2 rounded">Transaksi</Link>
+          <Link href={"https://cake-hazel.vercel.app"} className="hover:bg-gray-200 transition-colors p-2 rounded">something</Link>
+          <div className="border border-gray"></div>
+          <p onClick={signOut} className="cursor-pointer hover:bg-gray-200 transition-colors p-2 rounded text-red-600 font-semibold ">Log Out</p>
         </div>
       </div>
     </div>

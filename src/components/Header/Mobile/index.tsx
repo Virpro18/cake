@@ -22,15 +22,15 @@ const Mobile = ({ data }: { data: UserMetadata | undefined }) => {
                         <Link href={"/"}>About</Link>
                     </li>
                     {data ?
-                        <li onClick={() => setIsOpen(!isOpen)}>
-                           <ProfileImage user={data} />
+                        <li onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
+                            <ProfileImage user={data} />
                         </li> :
-                        <li>
+                        <li className="hover:cursor-pointer">
                             <Link href={"/account/login"}><ProfileImage user={data} /></Link>
                         </li>}
                 </ul>
             </div>
-            {isOpen && <Navigation setIsOpen={setIsOpen}/>}
+            {isOpen && <Navigation setIsOpen={setIsOpen} />}
         </>
     )
 }

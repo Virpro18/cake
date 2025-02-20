@@ -30,7 +30,7 @@ const UserProfile = () => {
     return (
         <div 
             ref={profileRef} 
-            className="hidden items-center gap-2 mr-4 hover:cursor-pointer relative md:flex" 
+            className="hidden items-center gap-2 mr-4 cursor-pointer relative md:flex" 
             onClick={toggleDropdown}
         >
             <ProfileImage user={data?.user_metadata} />

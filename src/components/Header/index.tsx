@@ -4,7 +4,6 @@ import Link from "next/link"
 import Navbar from "./Navbar"
 import UserProfile from "./UserProfile"
 import Mobile from "./Mobile"
-import { supabase } from "@/libs/supabase/client"
 import { useEffect, useState } from "react"
 import { User } from "@supabase/supabase-js"
 import { usePathname } from 'next/navigation';
