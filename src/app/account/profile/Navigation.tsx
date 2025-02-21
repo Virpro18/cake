@@ -1,13 +1,20 @@
-'use client'
-import Link from "next/link";
+import Link from "next/link"
 
-const Navigaiton = () => {
+const Navigation = () => {
     return (
-        <div>
-        <Link href="/profile">Profile</Link>
-        <Link href="/profile/settings">Settings</Link>
-        <Link href="/profile/notifications">Notifications</Link>
-        </div>
-    );
-    }
-    export default Navigaiton;
+        <nav className="p-1 mr-4">
+            <h1 className="font-bold text-2xl">Akun</h1>
+            <ul className="space-y-2">
+                <div className="border-neutral-200 border-t-[2px] my-3 w-full"></div>
+                <li>
+                    <Link href={"/account/profile"}>Akun</Link>
+                </li>
+                <li>
+                    <Link href={"/account/orders"}>Transaksi</Link>
+                </li>
+            </ul>
+        </nav>
+    )
+}
+
+export default Navigation

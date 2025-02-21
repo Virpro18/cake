@@ -44,7 +44,7 @@ const ProfileCard = (data: { user: User | null }) => {
                         <Link href={"/account/orders"} className="block w-full h-full p-2">Transaksi</Link>
                     </li>
                     <div className="border-neutral-200 border-t-[2px] my-3 w-full"></div>
-                    <li className="hover:bg-black transition-all hover:bg-opacity-20 hover:cursor-pointer rounded">
+                    <li className="hover:bg-black transition-all hover:bg-opacity-20 hover:cursor-pointer rounded text-red-700 font-semibold">
                         <p onClick={signOut} className="block w-full h-full p-2">Log Out</p>
                     </li>
                 </ul>
