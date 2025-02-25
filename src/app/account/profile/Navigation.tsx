@@ -1,6 +1,29 @@
-import Link from "next/link"
+'use client'
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
 const Navigation = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        // Cek ukuran layar saat pertama kali render
+        handleResize();
+
+        // Tambahkan event listener saat ukuran layar berubah
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    if (isMobile) return null; // Tidak merender komponen jika di mode mobile
+
     return (
         <nav className="p-1 mr-4">
             <h1 className="font-bold text-2xl">Akun</h1>
@@ -14,7 +37,7 @@ const Navigation = () => {
                 </li>
             </ul>
         </nav>
-    )
-}
+    );
+};
 
-export default Navigation
+export default Navigation;
