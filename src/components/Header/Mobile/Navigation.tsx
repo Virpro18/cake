@@ -17,7 +17,7 @@ const Navigation = ({ setIsOpen }: props) => {
   // console.log(data)
   return (
     <div className="fixed inset-0 flex items-center justify-center md:hidden bg-black bg-opacity-70" onClick={() => setIsOpen(false)}>
-      <div className="flex flex-col gap-2 w-3/4 p-4 bg-white z-50" onClick={(e) => e.stopPropagation()}>
+      <div className="flex flex-col gap-2 w-[90%] p-4 bg-white z-50" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center gap-2 ">
           <ProfileImage user={data?.user_metadata} size={40} />
           <div className="">
