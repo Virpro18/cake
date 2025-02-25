@@ -1,5 +1,5 @@
 'use server'
-import { createClient } from '@/libs/supabase/server';
+import Back from './Back';
 import Navigation from './Navigation';
 import ProfileImageUploader from './ProfileImageUploader';
 import { server } from '@/libs/getUserInfo';
@@ -8,9 +8,7 @@ const profile = async () => {
     const data = await server();
     return (
         <>
-            <div className="mt-8 ml-8 w-fit">
-                boleh lah
-            </div>
+            <Back/>
             <div className='flex w-full justify-center p-8 gap-8'>
                 <div className='w-2/12'>
                     <Navigation />

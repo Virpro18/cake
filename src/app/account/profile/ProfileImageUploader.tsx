@@ -2,7 +2,7 @@
 import { CiCamera } from "react-icons/ci";
 import ProfileImage from '@/components/Header/UserProfile/ProfileImage';
 import { User } from '@supabase/supabase-js';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Image from "next/image";
 import { supabase } from "@/libs/supabase/client";
 
@@ -19,15 +19,15 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             setImage(file);
             setPreviewUrl(URL.createObjectURL(file));
         }
-    }
+    }, []);
 
-    const uploadImage = async (file: File) => {
+    const uploadImage = useCallback(async (file: File) => {
         setIsOpen(true);
         const folderPath = `${userData.user?.id}/profile-picture/`;
 
@@ -59,16 +59,18 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
 
             if (uploadError) throw uploadError;
 
-            const { data: publicUrl } = await supabase.storage.from('avatars').getPublicUrl(filePath);
-            const {error: insertError} = await supabase.from('profiles').update({ profile_images: publicUrl.publicUrl }).eq('user_id', userData.user?.id);
+            const { data: publicUrl } = supabase.storage.from('avatars').getPublicUrl(filePath);
+            const { error: insertError } = await supabase.from('profiles').update({ profile_images: publicUrl.publicUrl }).eq('user_id', userData.user?.id);
             if (insertError) throw insertError;
 
             return publicUrl.publicUrl;
         } catch (error) {
             console.error('Error handling image upload:', error);
             return null;
+        } finally {
+            setIsOpen(false);
         }
-    }
+    }, [userData.user?.id]);
 
     return (
         <div className="flex flex-col">
@@ -86,7 +88,7 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
             {image && !isOpen && (
                 <button
                     className='bg-primary-500 text-black rounded-md p-1 mt-2'
-                    onClick={() => uploadImage(image).then(url => url && console.log('Profile picture updated:', url))}
+                    onClick={() => uploadImage(image).then(url => url && console.log('Profile picture updated:'))}
                 >
                     Upload
                 </button>

@@ -6,6 +6,7 @@ import { User } from "@supabase/supabase-js"
 import ProfileImage from "./ProfileImage"
 
 interface UserMetadata {
+    user_name: string
     full_name: string;
     email: string;
 }
@@ -19,6 +20,7 @@ const ProfileCard = (data: { user: User | null }) => {
 
 
     const userMetadata = data.user?.user_metadata as UserMetadata | undefined;
+    // console.log(userMetadata);
 
     return (
         <motion.div
@@ -32,7 +34,7 @@ const ProfileCard = (data: { user: User | null }) => {
                     <li className="flex gap-3">
                         <ProfileImage user={userMetadata} />
                         <div>
-                            <p className="font-bold">{userMetadata?.full_name}</p>
+                            <p className="font-bold">{userMetadata?.user_name}</p>
                             <p className="text-sm text-gray-600">{data.user.email}</p>
                         </div>
                     </li>

@@ -15,8 +15,9 @@ export const client = async () => {
       .select()
       .eq("user_id", dataProvider?.user?.id)
       .single();
+    console.log(dataUser);
     if (dataProvider.user) {
-      dataProvider.user.user_metadata.full_name = dataUser?.full_name;
+      dataProvider.user.user_metadata.user_name = dataUser?.username;
       dataProvider.user.user_metadata.avatar_url = dataUser?.profile_images;
     }
     return dataProvider;
@@ -37,7 +38,7 @@ export const server = async () => {
       .single();
 
     if (dataProvider.user) {
-      dataProvider.user.user_metadata.full_name = dataUser?.full_name;
+      dataProvider.user.user_metadata.user_name = dataUser?.username;
       dataProvider.user.user_metadata.avatar_url = dataUser?.profile_images;
     }
 
