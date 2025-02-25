@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
       { hostname: "avatars.githubusercontent.com" },
       { hostname: "cdn.discordapp.com" },
       { hostname: "images8.alphacoders.com" },
+      { hostname: "hsbzzqkinwofeomxachi.supabase.co" },
+      { hostname: "bnrxvxjjbqlcydneisnt.supabase.co" },
     ],
   },
   /* config options here */

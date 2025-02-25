@@ -20,7 +20,6 @@ const Header = () => {
             setData()
         }
         setUser(data)
-        console.log(data?.user_metadata)
     }, [data, setData])
     if (path.startsWith("/account")) return (<></>)
     return (
