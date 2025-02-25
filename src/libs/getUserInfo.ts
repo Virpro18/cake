@@ -1,12 +1,5 @@
 import { supabase as supabaseClient } from "./supabase/client";
 import { createClient } from "./supabase/server";
-interface User {
-  data: {
-    user_id: string;
-    username: string;
-    profile_images: string;
-  };
-}
 export const client = async () => {
   const { data: dataProvider } = await supabaseClient.auth.getUser();
   try {
