@@ -5,6 +5,7 @@ import { User } from '@supabase/supabase-js';
 import React, { useState, useCallback } from 'react';
 import Image from "next/image";
 import { supabase } from "@/libs/supabase/client";
+import { toast, ToastContainer } from "react-toastify";
 
 interface UserResponse {
     data: {
@@ -25,6 +26,7 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
             setImage(file);
             setPreviewUrl(URL.createObjectURL(file));
         }
+        setIsOpen(true)
     }, []);
 
     const uploadImage = useCallback(async (file: File) => {
@@ -73,27 +75,37 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
     }, [userData.user?.id]);
 
     return (
-        <div className="flex flex-col">
-            <div className='relative'>
-                <div className='absolute w-full h-full opacity-0 hover:opacity-100 bg-black bg-opacity-55 rounded-full transition-all flex items-center justify-center'>
-                    <input type='file' accept='image/*' className='opacity-0 w-full h-full absolute rounded-full z-10 cursor-pointer' onChange={handleImageChange} />
-                    <CiCamera className="w-1/2 h-1/2 opacity-70 text-white" />
+        <>
+            <ToastContainer />
+            <div className="flex flex-col">
+                <div className='relative'>
+                    <div className='absolute w-full h-full opacity-0 hover:opacity-100 bg-black bg-opacity-55 rounded-full transition-all flex items-center justify-center'>
+                        <input type='file' accept='image/*' className='opacity-0 w-full h-full absolute rounded-full z-10 cursor-pointer' onChange={handleImageChange} />
+                        <CiCamera className="w-1/2 h-1/2 opacity-70 text-white" />
+                    </div>
+                    {previewUrl ? (
+                        <Image src={previewUrl} alt="Preview" className="rounded-full object-cover" width={150} height={150} />
+                    ) : (
+                        <ProfileImage user={userData.user?.user_metadata} size={150} />
+                    )}
                 </div>
-                {previewUrl ? (
-                    <Image src={previewUrl} alt="Preview" className="rounded-full object-cover" width={150} height={150} />
-                ) : (
-                    <ProfileImage user={userData.user?.user_metadata} size={150} />
+                {image && isOpen && (
+                    <button
+                        className='bg-primary-500 text-black rounded-md p-1 mt-2'
+                        onClick={() => {
+                            uploadImage(image).then(url => url && console.log('Profile picture updated:'))
+                            return toast.promise(uploadImage(image), {
+                                pending: 'Uploading image...',
+                                success: 'Profile picture updated!',
+                                error: 'Error uploading image',
+                            });
+                        }}
+                    >
+                        Upload
+                    </button>
                 )}
             </div>
-            {image && !isOpen && (
-                <button
-                    className='bg-primary-500 text-black rounded-md p-1 mt-2'
-                    onClick={() => uploadImage(image).then(url => url && console.log('Profile picture updated:'))}
-                >
-                    Upload
-                </button>
-            )}
-        </div>
+        </>
     );
 }
 
