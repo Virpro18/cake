@@ -30,7 +30,6 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
     }, []);
 
     const uploadImage = useCallback(async (file: File) => {
-        setIsOpen(true);
         const folderPath = `${userData.user?.id}/profile-picture/`;
 
         try {
@@ -69,8 +68,6 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
         } catch (error) {
             console.error('Error handling image upload:', error);
             return null;
-        } finally {
-            setIsOpen(false);
         }
     }, [userData.user?.id]);
 
@@ -84,7 +81,7 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
                         <CiCamera className="w-1/2 h-1/2 opacity-70 text-white" />
                     </div>
                     {previewUrl ? (
-                        <Image src={previewUrl} alt="Preview" className="rounded-full object-cover" width={150} height={150} />
+                        <ProfileImage url={previewUrl} size={150} />
                     ) : (
                         <ProfileImage user={userData.user?.user_metadata} size={150} />
                     )}
@@ -94,11 +91,13 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
                         className='bg-primary-500 text-black rounded-md p-1 mt-2'
                         onClick={() => {
                             uploadImage(image).then(url => url && console.log('Profile picture updated:'))
+                            setIsOpen(false);
                             return toast.promise(uploadImage(image), {
                                 pending: 'Uploading image...',
                                 success: 'Profile picture updated!',
                                 error: 'Error uploading image',
                             });
+
                         }}
                     >
                         Upload
