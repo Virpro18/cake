@@ -3,7 +3,6 @@ import { CiCamera } from "react-icons/ci";
 import ProfileImage from '@/components/Header/UserProfile/ProfileImage';
 import { User } from '@supabase/supabase-js';
 import React, { useState, useCallback } from 'react';
-import Image from "next/image";
 import { supabase } from "@/libs/supabase/client";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -19,6 +18,7 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
     const [image, setImage] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isOpen, setIsOpen] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -37,17 +37,21 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
                 .storage
                 .from('avatars')
                 .list(folderPath);
+            console.log({ existingFiles });
 
             if (listError) throw listError;
 
             if (existingFiles && existingFiles.length > 0) {
                 const filePaths = existingFiles.map(file => `${folderPath}${file.name}`);
-                const { error: deleteError } = await supabase
-                    .storage
-                    .from('avatars')
-                    .remove(filePaths);
+                filePaths?.forEach(async (filePath, index) => {
+                    const { error: deleteError } = await supabase
+                        .storage
+                        .from('avatars')
+                        .remove([filePaths[index]]);
+                    console.log({ filePath });
 
-                if (deleteError) throw deleteError;
+                    if (deleteError) throw deleteError;
+                })
             }
 
             const fileName = `profile_${Date.now()}.${file.name.split('.').pop()}`;
@@ -61,6 +65,7 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
             if (uploadError) throw uploadError;
 
             const { data: publicUrl } = supabase.storage.from('avatars').getPublicUrl(filePath);
+            console.log({ publicUrl })
             const { error: insertError } = await supabase.from('profiles').update({ profile_images: publicUrl.publicUrl }).eq('user_id', userData.user?.id);
             if (insertError) throw insertError;
 
@@ -70,6 +75,22 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
             return null;
         }
     }, [userData.user?.id]);
+
+    const handleUploadClick = useCallback(() => {
+        if (image && !isUploading) {
+            setIsUploading(true);
+            uploadImage(image).then(url => {
+                if (url) {
+                    console.log('Profile picture updated:', url);
+                    toast.success('Profile picture updated!');
+                } else {
+                    toast.error('Error uploading image');
+                }
+                setIsUploading(false);
+                setIsOpen(false);
+            });
+        }
+    }, [image, isUploading, uploadImage]);
 
     return (
         <>
@@ -89,18 +110,10 @@ const ProfileImageUploader = ({ data: userData }: UserResponse) => {
                 {image && isOpen && (
                     <button
                         className='bg-primary-500 text-black rounded-md p-1 mt-2'
-                        onClick={() => {
-                            uploadImage(image).then(url => url && console.log('Profile picture updated:'))
-                            setIsOpen(false);
-                            return toast.promise(uploadImage(image), {
-                                pending: 'Uploading image...',
-                                success: 'Profile picture updated!',
-                                error: 'Error uploading image',
-                            });
-
-                        }}
+                        onClick={handleUploadClick}
+                        disabled={isUploading}
                     >
-                        Upload
+                        {isUploading ? 'Uploading...' : 'Upload'}
                     </button>
                 )}
             </div>

@@ -27,12 +27,12 @@ export default function RootLayout({
   const getUser = async () => {
     const supabase = await createClient();
     const { data, error } = await supabase.auth.getUser();
-    if (error) return console.log("col 30:",error);
+    if (error) return console.log("col 30:", error);
     const { data: userData, error: errorUser } = await supabase.from("profiles").select().eq("user_id", data?.user?.id).single();
     console.log(userData)
     if (errorUser) {
       await supabase.from("profiles").insert({ user_id: data?.user?.id, username: data?.user?.user_metadata.full_name, profile_images: data?.user?.user_metadata?.avatar_url });
-      return console.log("34",errorUser);
+      return console.log("34", errorUser);
     }
     // console.log("layout 36",userData);
   }
@@ -44,7 +44,9 @@ export default function RootLayout({
       >
 
         <Header />
-        {children}
+        <main>
+          {children}
+        </main>
       </body>
     </html>
   );
