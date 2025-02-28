@@ -21,7 +21,7 @@ const Navigation = ({ setIsOpen }: props) => {
         <div className="flex items-center gap-2 ">
           <ProfileImage user={data?.user_metadata} size={40} />
           <div className="">
-            <h1 className="text-lg font-bold">{data?.user_metadata?.full_name}</h1>
+            <h1 className="text-lg font-bold">{data?.user_metadata?.user_name}</h1>
             <p className="text-xs text-gray-500 whitespace-nowrap overflow-hidden text-ellipsis w-48">{data?.user_metadata?.email}</p>
           </div>
         </div>

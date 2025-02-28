@@ -7,5 +7,5 @@ export async function middleware(request: NextRequest) {
 
 // Tentukan path yang akan diperiksa
 export const config = {
-  matcher: ['/account/profile/:path*'], // Middleware hanya berlaku untuk /dashboard
+  matcher: ['/account/:path*'], // Middleware hanya berlaku untuk /dashboard
 }
